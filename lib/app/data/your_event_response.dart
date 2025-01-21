@@ -1,9 +1,9 @@
-class EventResponse {
+class YourEventResponse {
   List<Events>? events;
 
-  EventResponse({this.events});
+  YourEventResponse({this.events});
 
-  EventResponse.fromJson(Map<String, dynamic> json) {
+  YourEventResponse.fromJson(Map<String, dynamic> json) {
     if (json['events'] != null) {
       events = <Events>[];
       json['events'].forEach((v) {
