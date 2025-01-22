@@ -161,36 +161,21 @@ class DashboardController extends GetxController {
     }
   }
 
-  void deleteEvent({required int id}) async {
-    final response = await _getConnect.post(
-      '${BaseUrl.deleteEvents}$id',
-      {
-        '_method': 'delete',
-      },
-      headers: {'Authorization': "Bearer $token"},
-      contentType: "application/json",
+  Future<void> deleteEvent(int id) async {
+    // Mengirim request ke API untuk menghapus event dengan ID yang diberikan
+    final response = await _getConnect.delete(
+      '${BaseUrl.events}/$id', // Endpoint untuk delete event
+      headers: {'Authorization': "Bearer $token"}, // Header autentikasi
     );
 
     if (response.statusCode == 200) {
-      Get.snackbar(
-        'Success',
-        'Event Deleted',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.green,
-        colorText: Colors.white,
-      );
-
-      update();
-      getEvent();
-      getYourEvent();
+      // Jika berhasil, perbarui data event dan tampilkan notifikasi
+      yourEvents.removeWhere((event) => event.id == id);
+      Get.snackbar('Success', 'Event deleted successfully',
+          snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.green);
     } else {
-      Get.snackbar(
-        'Failed',
-        'Event Failed to Delete',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      Get.snackbar('Error', 'Failed to delete event',
+          snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.red);
     }
   }
 

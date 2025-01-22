@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
+import 'package:praujikom/app/data/event_response.dart';
 import 'package:praujikom/app/modules/dashboard/controllers/dashboard_controller.dart';
 import 'package:praujikom/app/modules/dashboard/views/add_view.dart';
 import 'package:praujikom/app/modules/dashboard/views/edit_view.dart';
@@ -12,14 +12,14 @@ class YourEventView extends GetView {
   @override
   Widget build(BuildContext context) {
     DashboardController controller = Get.put(DashboardController());
-
     final ScrollController scrollController = ScrollController();
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Get.to(() => AddView())?.then((_) {
-            controller.getYourEvent();
+            controller
+                .getYourEvent(); // Mengambil ulang data event setelah menambah
           });
         },
         child: const Icon(Icons.add),
@@ -90,42 +90,32 @@ class YourEventView extends GetView {
                       ),
                     ],
                   ),
-                  Divider(
-                    height: 10,
-                  ),
+                  Divider(height: 10),
                   Row(
-                    mainAxisAlignment:
-                        MainAxisAlignment.end, // Posisi item di ujung kanan
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      // Tombol Edit buat ngedit event
+                      // Tombol Edit
                       TextButton.icon(
-                        icon: const Icon(Icons.edit,
-                            color: Colors.blue), // Ikon edit dengan warna biru
+                        icon: const Icon(Icons.edit, color: Colors.blue),
                         label: const Text('Edit',
-                            style: TextStyle(
-                                color: Colors.blue)), // Teks "Edit" warna biru
+                            style: TextStyle(color: Colors.blue)),
                         onPressed: () {
-                          // Aksi kalau tombol Edit diklik
                           Get.to(
                             () => EditView(
-                              id: event.id!, // Bawa ID event ke halaman Edit
-                              title: event
-                                  .name!, // Bawa nama event ke halaman Edit
+                              id: event.id!,
+                              title: event.name!,
                             ),
                           );
                         },
                       ),
-                      // Tombol Delete buat hapus event
+                      // Tombol Delete
                       TextButton.icon(
-                        icon: const Icon(Icons.delete,
-                            color:
-                                Colors.red), // Ikon delete dengan warna merah
+                        icon: const Icon(Icons.delete, color: Colors.red),
                         label: const Text('Delete',
-                            style: TextStyle(
-                                color:
-                                    Colors.red)), // Teks "Delete" warna merah
+                            style: TextStyle(color: Colors.red)),
                         onPressed: () {
-                          controller.deleteEvent(id: event.id!);
+                          // Panggil fungsi deleteEvent() saat tombol Delete ditekan
+                          controller.deleteEvent(event.id!);
                         },
                       ),
                     ],
@@ -143,7 +133,7 @@ class YourEventView extends GetView {
   ZoomTapAnimation eventList() {
     return ZoomTapAnimation(
       onTap: () {
-        Get.to(() => EventDetailView(), id: 1);
+        Get.to(() => Events(), id: 1);
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -189,9 +179,7 @@ class YourEventView extends GetView {
               ),
             ],
           ),
-          Divider(
-            height: 10,
-          ),
+          Divider(height: 10),
           SizedBox(height: 16),
         ],
       ),
