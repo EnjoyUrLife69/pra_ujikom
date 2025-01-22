@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:praujikom/app/data/detail_event_response.dart';
 import 'package:praujikom/app/data/event_response.dart';
+import 'package:praujikom/app/data/profile_response.dart';
 import 'package:praujikom/app/modules/dashboard/views/index_view.dart';
 import 'package:praujikom/app/modules/dashboard/views/profile_view.dart';
 import 'package:praujikom/app/modules/dashboard/views/your_event_view.dart';
@@ -12,6 +13,8 @@ import 'package:praujikom/app/utils/api.dart';
 
 class DashboardController extends GetxController {
   var selectedIndex = 0.obs;
+  var yourEvents = <Events>[].obs;
+
   final _getConnect = GetConnect();
 
   void changeIndex(int index) {
@@ -24,22 +27,6 @@ class DashboardController extends GetxController {
     ProfileView(),
   ];
 
-  @override
-  void onInit() {
-    getEvent();
-    getYourEvent();
-    super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
 
   final token = GetStorage().read('token');
 
@@ -51,8 +38,6 @@ class DashboardController extends GetxController {
     );
     return EventResponse.fromJson(response.body);
   }
-
-  var yourEvents = <Events>[].obs;
 
   Future<void> getYourEvent() async {
     final response = await _getConnect.get(
@@ -179,4 +164,21 @@ class DashboardController extends GetxController {
     }
   }
 
+  @override
+  void onInit() {
+    getEvent();
+    getYourEvent();
+    super.onInit();
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+  }
+
+  @override
+
+  void onClose() {
+    super.onClose();
+  }
 }

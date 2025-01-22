@@ -12,6 +12,10 @@ class AddView extends GetView {
   Widget build(BuildContext context) {
     // Nih, bikin controller buat ngurusin dashboard pake Get.put
     DashboardController controller = Get.put(DashboardController());
+    controller.nameController.clear();
+    controller.descriptionController.clear();
+    controller.eventDateController.clear();
+    controller.locationController.clear();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Add Your Event'), 
