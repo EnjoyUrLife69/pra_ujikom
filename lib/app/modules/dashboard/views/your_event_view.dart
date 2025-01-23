@@ -108,16 +108,31 @@ class YourEventView extends GetView {
                           );
                         },
                       ),
-                      // Tombol Delete
                       TextButton.icon(
                         icon: const Icon(Icons.delete, color: Colors.red),
                         label: const Text('Delete',
                             style: TextStyle(color: Colors.red)),
                         onPressed: () {
-                          // Panggil fungsi deleteEvent() saat tombol Delete ditekan
-                          controller.deleteEvent(event.id!);
+                          Get.defaultDialog(
+                            title: "Delete Event",
+                            content: const Text(
+                                "Are you sure you want to delete this event?"),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Get.back(),
+                                child: const Text("Cancel"),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  controller.deleteEvent(event.id!);
+                                  Get.back();
+                                },
+                                child: const Text("Delete"),
+                              ),
+                            ],
+                          );
                         },
-                      ),
+                      )
                     ],
                   ),
                   const SizedBox(height: 16),

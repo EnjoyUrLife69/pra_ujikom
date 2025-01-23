@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import '../../../data/profile_response.dart';
@@ -5,6 +6,7 @@ import '../../../utils/api.dart';
 
 class ProfileController extends GetxController {
   final _getConnect = GetConnect();
+  final box = GetStorage();
   final token = GetStorage().read('token');
   final isLoading = false.obs;
 
@@ -34,7 +36,22 @@ class ProfileController extends GetxController {
   }
 
   void logout() {
-    token.remove('token');
-    Get.offAllNamed('/login');
+    Get.defaultDialog(
+      title: "Logout",
+      content: const Text("Are you sure you want to logout?"),
+      actions: [
+        TextButton(
+          onPressed: () => Get.back(),
+          child: const Text("Cancel"),
+        ),
+        TextButton(
+          onPressed: () {
+            box.remove('token');
+            Get.offAllNamed('/login');
+          },
+          child: const Text("Logout"),
+        ),
+      ],
+    );
   }
 }
